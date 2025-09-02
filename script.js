@@ -69,7 +69,7 @@ async function main() {
         songUL.innerHTML = songUL.innerHTML + `<li>
             <img class="invert" src="music.svg" alt="">
             <div class="info">
-                <div>${(song)}</div>
+                <div class="songname">${(song)}</div>
                 <div>Corpse Husband</div>
             </div>
             <div class="playnow">
@@ -112,6 +112,20 @@ async function main() {
         let percent = (e.offsetX / e.target.getBoundingClientRect().width) * 100;
         document.querySelector(".circle").style.left = percent + "%";
         currentSong.currentTime = ((currentSong.duration) * percent) / 100
+    })
+
+    // Add an event listener for hamburger
+
+    document.querySelector(".hamburger").addEventListener("click" , ()=>{
+        // document.getElementsByClassName("left")[0].style.left = "0";
+        document.querySelector(".left").style.left = "0";
+    })
+
+        // Add an event listener for close
+
+    document.querySelector(".close").addEventListener("click" , ()=>{
+        // document.getElementsByClassName("left")[0].style.left = "120%";
+        document.querySelector(".left").style.left = "-120%";
     })
 }
 
