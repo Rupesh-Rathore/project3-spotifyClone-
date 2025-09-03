@@ -87,13 +87,15 @@ body {
 .songList .info {
     font-size: 13px;
     width: 150px;
-    overflow-x: clip;
+    /* word-break: break-all; */
+    /* overflow-x: clip; */
     /* width: 344px; */
 }
 
-/* .songList .info .songname{
-    background-color:limegreen
-} */
+.songList .info div{
+    word-break: break-all;
+}
+
 .playnow {
     /* flex-wrap: wrap; */
     display: flex;
@@ -214,11 +216,15 @@ body {
 
 .spotifyPlaylist .card {
     width: 200px;
-    border: 1px solid crimson;
+    /* border: 1px solid crimson; */
     padding: 10px;
     border-radius: 5px;
-    background-color: #252525;
+    background: #252525;
     position: relative;
+}
+
+.card{
+    transition: all 0.4s ease;
 }
 
 .card>* {
@@ -273,6 +279,11 @@ body {
     /* top: 166px; */
 }
 
+.card:hover{
+    background: linear-gradient(to top , black,#252525,#252525,#252525);
+    cursor: pointer;
+}
+
 .playbar {
     min-height: 49px;
     padding: 12px;
@@ -290,16 +301,9 @@ body {
     gap: 15px;
 }
 
-.playbar .songbuttons :nth-child(2) {
-    width: 40px;
-}
-
-.playbar .songbuttons :nth-child(2n-1) {
-    width: 40px;
-}
-
 .playbar .songbuttons img {
     cursor: pointer;
+    width: 40px;
 }
 
 /* .playbar .songbuttons :nth-child(3){
@@ -308,6 +312,35 @@ body {
 .songinfo,
 .songtime {
     color: black;
+}
+
+.songinfo{
+    width: 250px;
+}
+
+.timevol{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.timevol .volume{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.timevol .volume img{
+    width: 40px;
+    cursor: pointer;
+}
+
+.songtime{
+    width: 125px;
+}
+
+.volume .range input{
+    cursor: pointer;
 }
 
 .abovebar {
@@ -349,6 +382,7 @@ body {
         z-index: 1;
         width: 420px;
         background-color: black;
+        padding: 0;
     }
 
     .left .close {
@@ -370,6 +404,10 @@ body {
 
     .songinfo{
         text-align: center;
+    }
+
+    .songinfo , .songtime{
+        width: auto;
     }
 
     .abovebar{
