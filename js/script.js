@@ -17,9 +17,13 @@ function secondsToMinutesSeconds(seconds) {
 }
 
 async function getSongs(folder) {
+    console.log(folder);
+    
     currFolder = folder;
     let a = await fetch(`/${folder}/`);
     let response = await a.text();
+    console.log(response);
+    
     let div = document.createElement("div");
     div.innerHTML = response;
     let as = div.getElementsByTagName("a");
@@ -27,10 +31,14 @@ async function getSongs(folder) {
     for (let index = 0; index < as.length; index++) {
         const element = as[index];
         if (element.href.endsWith(".mp3")) {
-            songs.push(element.href.split(`/${folder}/`)[1])
+            console.log(element.href.replaceAll("%5C", "/").split(`/${folder}/`)[1]);
+            
+            songs.push(element.href.replaceAll("%5C", "/").split(`/${folder}/`)[1])
         }
     }
 
+
+    
     // Show all the songs in the playlist
 
     let songUL = document.querySelector(".songList").getElementsByTagName("ul")[0];
@@ -89,8 +97,11 @@ async function displayAlbums() {
     let array = Array.from(anchors)
     for (let index = 0; index < array.length; index++) {
         const e = array[index];
-        if (e.href.includes("/songs") && !e.href.includes(".htaccess")) {
-            let folder = e.href.split("/").slice(-2)[0]
+
+        console.log(e);
+        
+        if (e.href.replaceAll("%5C", "/").includes("/songs") && !e.href.includes(".htaccess")) {
+            let folder = e.href.replaceAll("%5C", "/").split("/").slice(-2)[0]
             // Get the metadata of the folder
             let a = await fetch(`/songs/${folder}/info.json`)
             let response = await a.json();
