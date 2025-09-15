@@ -17,12 +17,12 @@ function secondsToMinutesSeconds(seconds) {
 }
 
 async function getSongs(folder) {
-    console.log(folder);
+    // console.log(folder);
     
     currFolder = folder;
     let a = await fetch(`/${folder}/`);
     let response = await a.text();
-    console.log(response);
+    // console.log(response);
     
     let div = document.createElement("div");
     div.innerHTML = response;
@@ -31,7 +31,7 @@ async function getSongs(folder) {
     for (let index = 0; index < as.length; index++) {
         const element = as[index];
         if (element.href.endsWith(".mp3")) {
-            console.log(element.href.replaceAll("%5C", "/").split(`/${folder}/`)[1]);
+            // console.log(element.href.replaceAll("%5C", "/").split(`/${folder}/`)[1]);
             
             songs.push(element.href.replaceAll("%5C", "/").split(`/${folder}/`)[1])
         }
@@ -68,9 +68,38 @@ async function getSongs(folder) {
 
     //Attach an event listener to each song
 
-    Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach(e => {
+    // Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach(e => {
+    //     e.addEventListener("click", element => {
+    //         playMusic(e.querySelector(".info").firstElementChild.innerHTML);
+    //     })
+    // })
+
+        Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach(e => {
         e.addEventListener("click", element => {
-            playMusic(e.querySelector(".info").firstElementChild.innerHTML);
+
+            // console.log(`/${currFolder}/` + e.querySelector(".info").firstElementChild.innerHTML);
+            console.log(((currentSong.src).split(`/${folder}/`))[1]);
+            
+            console.log(e.querySelector(".info").firstElementChild.innerHTML);
+            
+            
+            if((currentSong.src).split(`/${folder}/`)[1] == e.querySelector(".info").firstElementChild.innerHTML){
+
+                
+                if(currentSong.paused){
+                    playMusic(e.querySelector(".info").firstElementChild.innerHTML);
+                }
+                else{
+                    playMusic(e.querySelector(".info").firstElementChild.innerHTML,true);
+                    e.querySelector(".playnow>img").src = "img/play.svg";
+                    play.src = "img/play.svg"; 
+
+                }
+
+            }
+            else{
+                playMusic(e.querySelector(".info").firstElementChild.innerHTML);
+            }
         })
     })
 }
@@ -81,7 +110,19 @@ const playMusic = (track, pause = false) => {
     if (!pause) {
         currentSong.play();
         play.src = "img/pause.svg"
+
+        // To show which song is playing in the playlist
+        
+        Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach(e => {
+                if(e.querySelector(".info").firstElementChild.innerHTML == track){
+                    e.querySelector(".playnow>img").src = "img/pause.svg"
+                }
+                else{
+                    e.querySelector(".playnow>img").src = "img/play.svg"
+                }
+        })
     }
+
 
     document.querySelector(".songinfo").innerHTML = track;
     document.querySelector(".songtime").innerHTML = "00:00 / 00:00";
@@ -98,7 +139,7 @@ async function displayAlbums() {
     for (let index = 0; index < array.length; index++) {
         const e = array[index];
 
-        console.log(e);
+        // console.log(e);
         
         if (e.href.replaceAll("%5C", "/").includes("/songs") && !e.href.includes(".htaccess")) {
             let folder = e.href.replaceAll("%5C", "/").split("/").slice(-2)[0]
@@ -120,7 +161,7 @@ async function displayAlbums() {
 
     Array.from(document.getElementsByClassName("card")).forEach(e => {
         e.addEventListener("click", async item => {
-            console.log("Fetching Songs")
+            // console.log("Fetching Songs")
             await getSongs(`songs/${item.currentTarget.dataset.folder}`)
             playMusic(songs[0])
 
@@ -136,7 +177,7 @@ async function main() {
     playMusic(songs[0], true)
     currentSong.volume = 0.2;
     document.querySelector(".range").getElementsByTagName("input")[0].value = 20;
-
+    
     // Display all thealbums on the page
 
     displayAlbums();
@@ -147,10 +188,20 @@ async function main() {
         if (currentSong.paused) {
             currentSong.play();
             play.src = "img/pause.svg"
+            Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach(e => {
+            if((currentSong.src).split(`/${currFolder}/`)[1] == e.querySelector(".info").firstElementChild.innerHTML){
+                e.querySelector(".playnow>img").src = "img/pause.svg"
+            }
+    })
         }
         else {
             currentSong.pause();
             play.src = "img/play.svg"
+            Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach(e => {
+            if((currentSong.src).split(`/${currFolder}/`)[1] == e.querySelector(".info").firstElementChild.innerHTML){
+                e.querySelector(".playnow>img").src = "img/play.svg"
+            }
+    })
         }
     })
 
@@ -213,6 +264,8 @@ async function main() {
         currentSong.volume = parseInt(e.target.value) / 100;
         if (currentSong.volume >0){
             document.querySelector(".volume>img").src = document.querySelector(".volume>img").src.replace("mute.svg", "volume.svg")
+        }else{
+            document.querySelector(".volume>img").src = document.querySelector(".volume>img").src.replace("volume.svg", "mute.svg")
         }
     })
 
