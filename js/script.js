@@ -87,10 +87,12 @@ async function getSongs(folder) {
 
                 
                 if(currentSong.paused){
-                    playMusic(e.querySelector(".info").firstElementChild.innerHTML);
+                    // playMusic(e.querySelector(".info").firstElementChild.innerHTML);
+                    currentSong.play();
                 }
                 else{
-                    playMusic(e.querySelector(".info").firstElementChild.innerHTML,true);
+                    // playMusic(e.querySelector(".info").firstElementChild.innerHTML,true);
+                    currentSong.pause();
                     e.querySelector(".playnow>img").src = "img/play.svg";
                     play.src = "img/play.svg"; 
 
