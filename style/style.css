@@ -78,10 +78,20 @@ body {
     gap: 8px;
     cursor: pointer;
     /* padding: 12px 0; */
-    border: 1px solid white;
+    /* border: 1px solid white; */
     margin: 12px 0;
     padding: 13px;
     border-radius: 7px;
+    /* color :rgba(255, 255, 255, 0.537); */
+    transition: background 0.1s ease;
+}
+
+.songList ul li:hover{
+    /* transform: scale(1.1); */
+    /* color: rgba(255, 255, 255, 0.537); */
+    background: linear-gradient(to top, black, #252525, #252525, #252525);
+    
+    /* background: linear-gradient(to top, black, crimson, crimson); */
 }
 
 .songList ul li img {
@@ -371,21 +381,32 @@ body {
 .seekbar {
     height: 2px;
     width: 97.5%;
-    border: 2px solid crimson;
+    /* border: 2px solid crimson; */
     background-color: crimson;
     position: absolute;
     bottom: 9px;
     border-radius: 10px;
     cursor: pointer;
+    border: 2px solid crimson;
+    transition: all 0.05s ease;
+}
+
+.seekbar:hover {
+    background-color: rgb(176, 17, 49);
+    border-color: rgb(176, 17, 49);
+}
+.seekbar:hover .circle{
+    border-color: rgb(176, 17, 49);
 }
 
 .circle {
-    width: 15px;
+    width: 11px;
     aspect-ratio: 1/1;
     border-radius: 13px;
     position: relative;
-    bottom: 6.5px;
-    background-color: crimson;
+    bottom: 8px;
+    border: 4px solid crimson;
+    /* background-color: crimson; */
     /* left: 100%; */
     left: 0%;
     transition: left 0.5s;

@@ -54,7 +54,7 @@ async function getSongs(folder) {
         //         <span>Play Now</span>
         //         <img class="invert" src="play.svg" alt="">
         //     </div></li>`;
-        songUL.innerHTML = songUL.innerHTML + `<li>
+        songUL.innerHTML = songUL.innerHTML + `<li class="whiteBorder">
             <img class="invert" src="img/music.svg" alt="">
             <div class="info">
                 <div class="songname">${(song)}</div>
@@ -89,6 +89,8 @@ async function getSongs(folder) {
                 if(currentSong.paused){
                     // playMusic(e.querySelector(".info").firstElementChild.innerHTML);
                     currentSong.play();
+                    e.querySelector(".playnow>img").src = "img/pause.svg";
+                    play.src = "img/pause.svg"; 
                 }
                 else{
                     // playMusic(e.querySelector(".info").firstElementChild.innerHTML,true);
@@ -117,10 +119,22 @@ const playMusic = (track, pause = false) => {
         
         Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach(e => {
                 if(e.querySelector(".info").firstElementChild.innerHTML == track){
-                    e.querySelector(".playnow>img").src = "img/pause.svg"
+                    e.querySelector(".playnow>img").src = "img/pause.svg";
+                    e.classList.add("redBorder");
                 }
                 else{
                     e.querySelector(".playnow>img").src = "img/play.svg"
+                    e.classList.remove("redBorder");
+                }
+        })
+    }
+    else{
+        Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach(e => {
+                if(e.querySelector(".info").firstElementChild.innerHTML == track){
+                    e.classList.add("redBorder");
+                }
+                else{
+                    e.classList.remove("redBorder");
                 }
         })
     }

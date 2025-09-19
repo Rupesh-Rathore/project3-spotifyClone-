@@ -15,6 +15,14 @@
     margin: 3px;
 }
 
+.whiteBorder{
+    border: 1px solid white;
+}
+.redBorder{
+    border: 1px solid crimson;
+}
+
+
 .bg-black {
     background-color: black;
     color: white;
